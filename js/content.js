@@ -1,15 +1,17 @@
-// Глобавльная переменная URLSearchParams
-var url = new URLSearchParams(document.location.search);
+const
+	// Глобавльная переменная URL и URLSearchParams
+	URL = document.location.href,
+	URLSP = new URLSearchParams(document.location.search),
+	// Регулярка получения цен из строки
+	REGEXP = new RegExp(/[\d\s]+(?:\.|,)\d+/),
+	REGEXP2 = new RegExp(/\d+/);
 
-// Регулярка получения цен из строки
-var REGEXP = new RegExp(/[\d\s]+(?:\.|,)\d+/),
-	REGEXP2 = new RegExp(/\d+/),
-	TOTALPRICE = 0;
+var TOTALPRICE = 0;
 
 function load(){
 
 	/* Страница товара */
-	if(~document.location.href.indexOf('/item/')){
+	if(~URL.indexOf('/item/')){
 
 		if(DATA.setting.totalPrice){
 			// Отрисовываем блок для вывода цены и кнопку "Пересчитать"
@@ -54,9 +56,9 @@ function load(){
 			// Показать оригинальное (на английском) название
 			// ?isOrigTitle=true
 			if(!document.querySelector('.product-title-switch')){
-				url.set("isOrigTitle", "true");
+				URLSP.set("isOrigTitle", "true");
 				// Отрисовываем ссылку переключения
-				document.querySelector('.product-title').insertAdjacentHTML('afterend','<div class="product-title-switch"><a href="'+ window.location.pathname + '?' + url.toString() +'"><svg class="svg-icon m product-title-icon" aria-hidden="true"><use xlink:href="#icon-translate"></use></svg>Посмотреть оригинальное название</a></div>');
+				document.querySelector('.product-title').insertAdjacentHTML('afterend','<div class="product-title-switch"><a href="'+ window.location.pathname + '?' + URLSP.toString() +'"><svg class="svg-icon m product-title-icon" aria-hidden="true"><use xlink:href="#icon-translate"></use></svg>Посмотреть оригинальное название</a></div>');
 			}
 		}
 
@@ -72,16 +74,16 @@ function load(){
 			var AEsearch = document.querySelector('.AEsearch');
 			AEsearch.addEventListener('keyup', e => {
 				if (e.keyCode == 13) {
-					let oldS = url.get("SearchText");
+					let oldS = URLSP.get("SearchText");
 					oldS = oldS ? oldS + "+" : "";
-					url.delete("SearchText");
+					URLSP.delete("SearchText");
 					var u = window.location.pathname;
-					if (~document.location.href.indexOf('w/wholesale')) {
+					if (~URL.indexOf('w/wholesale')) {
 						oldS = u.replace('/w/wholesale-', '').replace('.html', '') + '+';
 						u = '/wholesale';
 					}
-					url.set("SearchText", oldS + e.target.value);
-					window.location.href = u + '?' + url.toString();
+					URLSP.set("SearchText", oldS + e.target.value);
+					window.location.href = u + '?' + URLSP.toString();
 				}
 			})
 		}
