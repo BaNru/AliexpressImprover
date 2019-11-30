@@ -153,7 +153,7 @@ function load(){
 	// Номера треков на странице заказов
 	if(DATA.setting.tracks){
 		// Запуск скрипта отображения треков
-		if (~document.location.href.indexOf('orderList.htm')) {
+		if (~URL.indexOf('orderList.htm') || ~URL.indexOf('order_list.htm')) {
 			var ordernumbers = [];
 			document.querySelectorAll('.order-info .first-row .info-body').forEach(el => {
 				//localStorage.clear();
