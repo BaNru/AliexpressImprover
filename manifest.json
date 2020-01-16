@@ -3,12 +3,13 @@
 	"name": "Aliexpress Improve",
 	"short_name": "AliImprove",
 	"author": "BaNru",
-	"version": "2.0.0",
+	"version": "2.0.1",
 
 	"description": "Улучшения и надстройки AliExpress",
 
 	"permissions": [
 		"*://*.aliexpress.com/*",
+		"*://*.aliexpress.ru/*",
 		"storage"
 	],
 
@@ -29,7 +30,7 @@
 
 	"content_scripts":[{
 		"css"		: ["css/style.css"],
-		"matches"	: ["*://*.aliexpress.com/*"],
+		"matches"	: ["*://*.aliexpress.com/*","*://*.aliexpress.ru/*"],
 		"js"		: ["/js/content_functions.js", "/js/content.js", "/js/functions.js"],
 //		"run_at"	: "document_idle",
 		"run_at"	: "document_end"
