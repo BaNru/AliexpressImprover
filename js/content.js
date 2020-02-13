@@ -9,6 +9,7 @@ const
 var TOTALPRICE = 0;
 
 function load(){
+	styles = "";
 
 	/* Страница товара */
 	if(~URL.indexOf('/item/')){
@@ -179,6 +180,10 @@ function load(){
 				console.log(e);
 			});
 		}
+	}
+
+	if(styles){
+		document.querySelector('body').insertAdjacentHTML('afterend', '<style>'+styles+'</style>');
 	}
 
 }
