@@ -26,7 +26,7 @@ function RunTotalPrise() {
 
 	// Высчитываем
 	if (price) {
-		var INPUT_ = document.querySelector('.product-number-picker input').value;
+		var INPUT_ = (document.querySelector('.product-number-picker input') && document.querySelector('.product-number-picker input').value) || 1;
 		if (shippingPrice) {
 			return (price * INPUT_ + shippingPrice).toFixed(2);
 		} else {
