@@ -32,28 +32,31 @@ function load(){
 	if(~URL.indexOf('/item/')){
 
 		if(DATA.setting.totalPrice){
-			// Отрисовываем блок для вывода цены и кнопку "Пересчитать"
-			document.querySelector('.product-action').insertAdjacentHTML('beforebegin',
-				'<span class="USER_totalPrice"">Общая сумма: ' + RunTotalPrise() + '</span><span class="USER_RunTotalPrice">Пересчитать</span>');
-			// Создаём блок для подсчёта за единицу
-			document.querySelector('.product-sku').insertAdjacentHTML('afterend','<small class="USER_SiglePrice" style="top:-6px;position:relative;"></small>');
+			var pricePar = document.querySelector('.product-action')
+			if(pricePar){
+				// Отрисовываем блок для вывода цены и кнопку "Пересчитать"
+				pricePar.insertAdjacentHTML('beforebegin',
+					'<span class="USER_totalPrice"">Общая сумма: ' + RunTotalPrise() + '</span><span class="USER_RunTotalPrice">Пересчитать</span>');
+				// Создаём блок для подсчёта за единицу
+				document.querySelector('.product-sku').insertAdjacentHTML('afterend','<small class="USER_SiglePrice" style="top:-6px;position:relative;"></small>');
 
-			// Клик по кнопки "Пересчитать"
-			document.querySelector('.USER_RunTotalPrice').addEventListener('click', ReloadTotalPrise);
+				// Клик по кнопки "Пересчитать"
+				document.querySelector('.USER_RunTotalPrice').addEventListener('click', ReloadTotalPrise);
 
-			// Инициализация скрипта подсчёта при выборе характеристик товара и количества
-			// Отслеживание изменения доставки пользователем не предусмотрено
-			document.querySelectorAll('.product-quantity button,.sku-property-item').forEach(item => {
-				item.addEventListener('click', e=>{
-					setTimeout(()=>{
-						ReloadTotalPrise();
-						// Подсчёт за единицу. Пока оставим тут.
-						if(e.target.textContent.match(REGEXP2)){
-							document.querySelector('.USER_SiglePrice').textContent = parseFloat( TOTALPRICE / e.target.textContent.match(REGEXP2)[0] ).toFixed(2);
-						}
-					}, DATA.extSetting.timePrice||500); // Увеличить цифру 2+ раза, если не будет успевать считать
+				// Инициализация скрипта подсчёта при выборе характеристик товара и количества
+				// Отслеживание изменения доставки пользователем не предусмотрено
+				document.querySelectorAll('.product-quantity button,.sku-property-item').forEach(item => {
+					item.addEventListener('click', e=>{
+						setTimeout(()=>{
+							ReloadTotalPrise();
+							// Подсчёт за единицу. Пока оставим тут.
+							if(e.target.textContent.match(REGEXP2)){
+								document.querySelector('.USER_SiglePrice').textContent = parseFloat( TOTALPRICE / e.target.textContent.match(REGEXP2)[0] ).toFixed(2);
+							}
+						}, DATA.extSetting.timePrice||500); // Увеличить цифру 2+ раза, если не будет успевать считать
+					});
 				});
-			});
+			}
 		}
 
 		if(DATA.setting.breadcrumbs){
