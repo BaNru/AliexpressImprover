@@ -80,7 +80,8 @@ chrome.runtime.onInstalled.addListener(details=>{
 				extSearch: true,
 				stopSlider: true,
 				tracks: true,
-				evaHide: true
+				evaHide: true, // Скрываем Еву
+				hideTopBannerHome: true, // Скрываем верхний баннер
 			};
 		}
 		if(!DATA.hasOwnProperty('extSetting')){
@@ -97,5 +98,12 @@ chrome.runtime.onInstalled.addListener(details=>{
 		// 	DATA.updateTimers = {};
 		// }
 		saveDATA();
+	}
+	if (details.reason == "update"){
+		// Обновление старой БД
+		if(Number(details.previousVersion) <= 2.0){
+			DATA.setting.hideTopBannerHome = true; // Скрываем верхний баннер
+			saveDATA();
+		}
 	}
 });

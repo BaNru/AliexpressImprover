@@ -11,6 +11,11 @@ var TOTALPRICE = 0;
 function load(){
 	styles = "";
 
+	/* Скрываем верхний баннер */
+	if(DATA.setting.hideTopBannerHome){
+		styles += '.top-banner-container {display:none!important}';
+	}
+
 	/* Страница товара */
 	if(~URL.indexOf('/item/')){
 
