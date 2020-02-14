@@ -85,6 +85,30 @@ function load(){
 		}
 
 	}
+
+	var breadcrumbDef = document.querySelector('.ui-breadcrumb .container,.breadcrumb_');
+	if(breadcrumbDef){
+		breadcrumbDef.insertAdjacentHTML('beforeend','<div class="AIbtn"></div>');
+		var AIbtn = document.querySelector('.AIbtn');
+	}
+
+	if(~URL.indexOf('/item/') || ~URL.indexOf('/i/')){
+		if(breadcrumbDef){
+			if(DATA.setting.copyLinkPage){
+				AIbtn.insertAdjacentHTML('beforeend','<span class="AIcopy"></span>');
+				var AIcopy = document.querySelector('.AIcopy');
+				AIcopy.addEventListener('click', e=>{
+					var id = URL.match(/(i|item)\/([0-9]+)\./);
+					if(!id){return false}
+					copyContect('https://aliexpress.com/item/'+id[2]+'.html');
+					e.target.style.backgroundColor = '#bfb';
+					setTimeout((el)=>{
+						el.style = "";
+					},1000,e.target);
+				});
+			}
+		}
+	}
 	/* / Страница товара */
 
 

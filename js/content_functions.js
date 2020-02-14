@@ -95,3 +95,21 @@ function insertTrack(el, track) {
 	});
 	thisBTN.parentNode.insertBefore(trackrefresh, thisBTN.nextSibling);
 }
+
+
+/**
+ * Функция копирования текста в буфер
+ *
+ * @param {string} text = copy text
+ */
+function copyContect(text){
+	const input = document.createElement('input');
+	input.style.position = 'fixed';
+	input.style.opacity = 0;
+	input.value = text;
+	document.body.appendChild(input);
+	input.select();
+	let result =  document.execCommand('Copy', false, null);
+	document.body.removeChild(input);
+	return result;
+}
