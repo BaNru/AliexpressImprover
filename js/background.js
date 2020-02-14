@@ -82,6 +82,7 @@ chrome.runtime.onInstalled.addListener(details=>{
 				tracks: true,
 				evaHide: true, // Скрываем Еву
 				hideTopBannerHome: true, // Скрываем верхний баннер
+				searchWithoutLogin: true // Поиск без авторизации
 			};
 		}
 		if(!DATA.hasOwnProperty('extSetting')){
@@ -103,6 +104,7 @@ chrome.runtime.onInstalled.addListener(details=>{
 		// Обновление старой БД
 		if(Number(details.previousVersion) <= 2.0){
 			DATA.setting.hideTopBannerHome = true; // Скрываем верхний баннер
+			DATA.setting.searchWithoutLogin = true; // Поиск без авторизации
 			saveDATA();
 		}
 	}
