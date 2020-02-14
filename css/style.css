@@ -94,16 +94,31 @@ input {
 
 /* Breadcrumb */
 .breadcrumb_ {
-	text-align: center;
 	margin: -15px 0 15px;
+	max-width: 1200px;
+	margin: 0 auto 26px;
+	font-size: 12px;
+	color: #999;
+	padding: 2px 20px;
+	border-bottom: 1px solid #e9e9e9;
+	background-color: #fff;
+	line-height: 32px;
 }
-.breadcrumb_ a {
+.breadcrumb_ a, .breadcrumb_ a:link {
 	padding: 0 5px;
 	color: #666;
-	font-size: 0.8em;
 }
 .breadcrumb_ a:hover {
-	color: #ff4747
+	color: #F60;
+}
+.breadcrumb_ a:after, .breadcrumb_ a:hover:after {
+	color: #999;
+	content: ">";
+	padding: 0 0 0 1em;
+	display: inline-block;
+}
+.breadcrumb_ a:last-child:after {
+	display: none;
 }
 
 /* Скрытие надоедливой Евы */
