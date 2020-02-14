@@ -70,6 +70,7 @@ function load(){
 				let el = element.cloneNode(true);
 					breadcrumb_.append(el);
 				});
+				styles += '.product-main{padding-top:0}'
 			}
 		}
 

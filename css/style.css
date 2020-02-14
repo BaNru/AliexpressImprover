@@ -117,7 +117,7 @@ input {
 	padding: 0 0 0 1em;
 	display: inline-block;
 }
-.breadcrumb_ a:last-child:after {
+.breadcrumb_ a:last-of-type:after {
 	display: none;
 }
 
