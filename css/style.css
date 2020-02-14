@@ -123,3 +123,27 @@ input {
 
 /* Скрытие надоедливой Евы */
 .evaHideTrue #J_xiaomi_dialog {display: none;}
+
+/* Панель кнопок */
+.AIbtn {
+	float: right;
+}
+.AIbtn span {
+	cursor: pointer;
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	background: 50% 50%/18px 18px no-repeat;
+	transition: background-color 0.2s linear;
+}
+.AIbtn span:hover {
+	background-color: #ddd;
+}
+/* Кнопка копирования */
+span.AIcopy {
+	background-image: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeD0iMTZweCIgeT0iMTZweCIgdmlld0JveD0iMCAwIDE2IDE2Ij48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWwpwYXRoIHtmaWxsOm5vbmU7c3Ryb2tlOiM2NjY7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjIzfQpdXT48L3N0eWxlPjwvZGVmcz4KICAgPHBhdGggZD0iTTcuNSA1LjVsNiAwYzEuMSwwIDIsMC45IDIsMmwwIDZjMCwxLjEgLTAuOSwyIC0yLDJsLTYgMGMtMS4xMDEsMCAtMiwtMC45IC0yLC0ybDAgLTZjMCwtMS4xIDAuODk5LC0yIDIsLTJ6Ii8+CiAgIDxwYXRoIGQ9Ik0zLjUgMTAuNWwtMSAwYy0xLjEsLTAuMDAxIC0yLC0wLjkgLTIsLTJsMCAtNmMwLC0xLjEgMC45LC0yIDIsLTJsNiAwYzEuMSwwIDIsMC45IDIsMmwwIDEuMTU2Ii8+Cjwvc3ZnPg==');
+}
+/* Кнопка переключения "дизайна" товара */
+span.AIolD {
+	background-image: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeD0iMTZweCIgeT0iMTZweCIgdmlld0JveD0iMCAwIDE2IDE2Ij48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWwpwYXRoe2ZpbGw6bm9uZTtzdHJva2U6IzY2NjtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MjN9Ci5je2ZpbGw6IzY2Nn0KXV0+PC9zdHlsZT48L2RlZnM+CiAgIDxwYXRoIGQ9Ik04IDAuNWM0LjE0MiwwIDcuNSwzLjM1OCA3LjUsNy41IDAsNC4xNDIgLTMuMzU4LDcuNSAtNy41LDcuNSAtNC4xNDIsMCAtNy41LC0zLjM1OCAtNy41LC03LjUgMCwtNC4xNDIgMy4zNTgsLTcuNSA3LjUsLTcuNXoiLz4KPHBhdGggY2xhc3M9ImMiIGQ9Ik04IDAuNWM0LjE0MiwwIDcuNSwzLjM1OCA3LjUsNy41IDAsNC4xNDIgLTMuMzU4LDcuNSAtNy41LDcuNWwwIC0xNXoiLz4KPC9zdmc+');
+}

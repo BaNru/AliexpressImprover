@@ -86,26 +86,38 @@ function load(){
 
 	}
 
-	var breadcrumbDef = document.querySelector('.ui-breadcrumb .container,.breadcrumb_');
-	if(breadcrumbDef){
-		breadcrumbDef.insertAdjacentHTML('beforeend','<div class="AIbtn"></div>');
-		var AIbtn = document.querySelector('.AIbtn');
-	}
+	if(~URL.indexOf('/i/')){}
 
 	if(~URL.indexOf('/item/') || ~URL.indexOf('/i/')){
+
+		var id = URL.match(/(i|item)\/([0-9]+)\./);
+		if(!id){return false} // Делаем временно остановку по ID тут, пока что все функции ниже зависят от ID
+		var breadcrumbDef = document.querySelector('.ui-breadcrumb .container,.breadcrumb_');
+		if(breadcrumbDef){
+			breadcrumbDef.insertAdjacentHTML('beforeend','<div class="AIbtn"></div>');
+			var AIbtn = document.querySelector('.AIbtn');
+		}
+
 		if(breadcrumbDef){
 			if(DATA.setting.copyLinkPage){
 				AIbtn.insertAdjacentHTML('beforeend','<span class="AIcopy"></span>');
-				var AIcopy = document.querySelector('.AIcopy');
-				AIcopy.addEventListener('click', e=>{
-					var id = URL.match(/(i|item)\/([0-9]+)\./);
-					if(!id){return false}
+				document.querySelector('.AIcopy').addEventListener('click', e=>{
 					copyContect('https://aliexpress.com/item/'+id[2]+'.html');
 					e.target.style.backgroundColor = '#bfb';
 					setTimeout((el)=>{
 						el.style = "";
 					},1000,e.target);
 				});
+			}
+			if(DATA.setting.oldDesign){
+				AIbtn.insertAdjacentHTML('beforeend','<span class="AIolD"></span>');
+				document.querySelector('.AIolD').addEventListener('click', e=>{
+					if(id[1] == 'i'){
+						document.location.href = 'https://aliexpress.com/item/'+id[2]+'.html';
+					}else{
+						document.location.href = 'https://aliexpress.com/i/'+id[2]+'.html';
+					}
+				})
 			}
 		}
 	}
