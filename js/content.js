@@ -11,6 +11,20 @@ var TOTALPRICE = 0;
 function load(){
 	styles = "";
 
+	/* Проверка локали */
+	if(DATA.extSetting.intl_locale){
+		chrome.runtime.sendMessage({changeLocale : true},(r)=>{
+			if(~URL.indexOf('aliexpress.ru')){
+				if(confirm('Перейти на aliexpress.com?')){
+					document.location = URL.replace('aliexpress.ru','aliexpress.com');
+				}
+			}
+			if(r == 'update' && confirm('Куки обновлены. Перезагрузить страницу?')){
+				document.location = URL.replace('aliexpress.ru','aliexpress.com');
+			}
+		})
+	}
+
 	/* Скрываем верхний баннер */
 	if(DATA.setting.hideTopBannerHome){
 		styles += '.top-banner-container {display:none!important}';

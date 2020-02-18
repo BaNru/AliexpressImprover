@@ -49,6 +49,37 @@ function getTrackXHRBG(attr) {
 }
 
 
+/* Функция изменения куки, переключение на другую локаль */
+function changeCoockeLang(domain1,domain2){
+	new Promise((resolve, reject) => {
+		chrome.cookies.get({
+			url:'https://aliexpress.'+domain1,
+			name:'aep_usuc_f'
+		},c=>{
+			var loc = DATA.extSetting.intl_locale.split(/\s|,|\|/);
+			if(loc.length !== 2){
+				return reject('Error split locales');
+			}
+			if(!~c.value.indexOf('site='+loc[0]+'&')){
+				c = c.value.replace(/(site=.*?(&|$))/,'site='+loc[0]+'$2');
+				c = c.replace(/(b_locale=.*?(&|$))/,'b_locale='+loc[1]+'$2');
+				chrome.cookies.set({
+					url:'https://aliexpress.'+domain1,
+					domain:'.aliexpress.'+domain2,
+					name: 'aep_usuc_f',
+					value: c
+				},(r)=>{
+					// console.log(r);
+					return resolve(10);
+				})
+			}else{
+				return resolve(1);
+			}
+		});
+	})
+}
+
+
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		// console.log(request);
@@ -61,10 +92,25 @@ chrome.runtime.onMessage.addListener(
 				});
 			return true;
 		}
+		if (request.hasOwnProperty("changeLocale") && DATA.extSetting.intl_locale != false){
+			Promise.all([
+				changeCoockeLang('ru','ru'),
+				changeCoockeLang('ru','com'),
+				changeCoockeLang('com','com')
+			]).then(v => {
+				if(v[0]+v[1]+v[2] > 5){
+					sendResponse('update');
+				} else {
+					sendResponse('ok');
+				}
+			}).catch(e => {
+				console.log(e);
+			});
+			return true;
+		}
 		return false;
 	}
 )
-
 
 chrome.runtime.onInstalled.addListener(details=>{
 	// reason: "install"
@@ -90,7 +136,8 @@ chrome.runtime.onInstalled.addListener(details=>{
 			DATA.extSetting = {
 				timePrice: 500,
 				timeSlider: 500,
-				trackURL: 'https://gdeposylka.ru/*'
+				trackURL: 'https://gdeposylka.ru/*',
+				intl_locale: false // 2.1.0
 			};
 		}
 		if(!DATA.hasOwnProperty('tracks')){
@@ -107,7 +154,10 @@ chrome.runtime.onInstalled.addListener(details=>{
 			DATA.setting.hideTopBannerHome = true; // Скрываем верхний баннер
 			DATA.setting.searchWithoutLogin = true; // Поиск без авторизации
 			DATA.setting.copyLinkPage = true; // Копировать ссылку товара
-			saveDATA();
 		}
+		if(Number(details.previousVersion) <= 2.1){
+			DATA.extSetting.intl_locale = false;  // Переключение на другую локаль
+		}
+		saveDATA();
 	}
 });
