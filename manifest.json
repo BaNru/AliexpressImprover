@@ -3,13 +3,14 @@
 	"name": "Aliexpress Improve",
 	"short_name": "AliImprove",
 	"author": "BaNru",
-	"version": "2.1",
+	"version": "2.2",
 
 	"description": "Улучшения и надстройки AliExpress",
 
 	"permissions": [
 		"*://*.aliexpress.com/*",
 		"*://*.aliexpress.ru/*",
+		"cookies",
 		"storage"
 	],
 
