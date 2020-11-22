@@ -282,6 +282,134 @@ function load(){
 		}
 	}
 
+
+	// проверка времени заказа на ontime delivery protection
+	// mod by @Rimpel
+	// https://gist.github.com/Rimpel/f432cf885f41d5e3d5f495d436df5666
+	if(DATA.setting.ontime_delivery_protection){
+		if (~URL.indexOf('orderList.htm') || ~URL.indexOf('order_list.htm')) {
+			function addDays(date, days) {
+				const copy = new Date(Number(date))
+				copy.setDate(date.getDate() + days)
+				return copy
+			}
+
+			document.querySelectorAll('#buyer-ordertable > *').forEach(el => {
+				let orderDateElem = el.querySelector('tr.order-head > td.order-info > p.second-row > span.info-body');
+				let deliveryProtectionPeriodElem = el.querySelector("tr.order-body > td.product-sets > div.product-right > div > div > a");
+
+				let orderDate = new Date('1900-01-01');
+				try {
+					orderDate = new Date(orderDateElem.textContent);
+				} catch (e) {
+					console.log( orderDateElem );
+				}
+
+				if (orderDate > new Date('1900-01-01') ) {
+					// получение периода защиты заказа в днях и расчет относительно текущей даты
+					let deliveryProtectionPeriod = "";
+					if (deliveryProtectionPeriodElem) {
+						deliveryProtectionPeriod = deliveryProtectionPeriodElem.title;
+						deliveryProtectionPeriod = deliveryProtectionPeriod.replace(/[^\d]/g, '');
+					}
+					
+					//проверка подтвержденного заказа
+					let orderConfirmElem = el.querySelector("tr.order-body > td.product-action > span:nth-child(1)");
+
+					let orderConfirmed = "";
+					if (orderConfirmElem) {
+						orderConfirmed = orderConfirmElem.textContent;
+					}
+
+					let isOrderConfirmed = function() {
+					  return orderConfirmed == 'Получено подтверждение';
+					};
+
+					let isOrderCancelled = function() {
+					  return orderConfirmed == 'Заказ не отправлен' || orderConfirmed == 'Заказ отменён';
+					};
+
+					//проверка на закрытые споры
+					let productActionInfoElem = el.querySelector("tr.order-body > td.product-action > a:nth-child(1)");
+					let productActionInfo = "";
+
+					if (productActionInfoElem) {
+						productActionInfo = productActionInfoElem.text;
+					}
+
+					let isDisputeClosed = function() {
+						return productActionInfo == 'Спор закрыт' || productActionInfo == 'Завершён';
+					}
+
+					// получение количества дней до закрытия заказа
+					let daysUntilOrderClose = 0
+					let pDaysUntilOrderClose = el.querySelector("tr.order-body > td.order-status > p");
+
+					if (pDaysUntilOrderClose && pDaysUntilOrderClose.hasAttribute("lefttime")) {
+						daysUntilOrderClose = pDaysUntilOrderClose.getAttribute("lefttime");
+					}
+
+					let isFewDaysTilOrderClose = daysUntilOrderClose < ( 5*24*3600*1000 ); // check if there is less than 5 days left till order close
+
+					//вычисление количества дней от пороговой даты
+					let orderDate = new Date(orderDateElem.textContent);
+					let dateThreshold = addDays(orderDate, parseInt(deliveryProtectionPeriod));
+
+					let now = new Date();
+					let dateDiff = Math.round((now - dateThreshold)/1000/86400);
+
+					//пусть теперь дата заказа отображает также и количество прошедших дней
+					let daysPassed = Math.round((now - orderDate)/1000/86400);
+					orderDateElem.insertAdjacentHTML( 'beforeend', ` [${daysPassed} days passed]`);
+
+					if ( isDisputeClosed() ) {
+						el.style.textDecoration = "line-through";
+						el.style.backgroundColor = "lightGrey";
+					}
+					else if ( isOrderCancelled() ) {
+						el.style.fontStyle = "italic"
+						el.style.backgroundColor = "lightGrey"
+					}
+					else if ( dateDiff >= 0 ) {
+						if ( !isOrderConfirmed() ) {
+							// Подтверждения еще нет, спор не закрыт - изменение цвета даты
+							orderDateElem.style.color = "red";
+							if (!isFewDaysTilOrderClose) {
+								orderDateElem.insertAdjacentText('afterend', `but there is still time until order close`);
+							};
+							orderDateElem.insertAdjacentHTML('afterend', `<h4><p class="deliveryFailed" style="color: grey">exceeded ${deliveryProtectionPeriod} days protection period by ${dateDiff} days</span></h4>`);
+							if (isFewDaysTilOrderClose) {
+								orderDateElem.style.color = "grey";
+								el.querySelector("tr.order-head").style.backgroundColor = "OrangeRed";
+							}
+						} else if ( dateDiff < 15 ) {
+							// если получено подтверждение, покрасить дату в другой цвет, т.к. иногда заказы закрываются автоматически по завершении периода защиты
+							// для заказов с датой подтверждения более чем deliveryProtectionPeriod+15(максмальное количество дней для возможности открытия диспута)
+							//это уже не актуально
+							orderDateElem.style.color = "BlueViolet";
+						}
+					} else if ( dateDiff < 0 ) {
+						if ( !isOrderConfirmed() ) {
+							let dateColor = (dateDiff>-5)?"darkmagenta":"green";
+							let absDateDiff = Math.abs(dateDiff);
+							orderDateElem.insertAdjacentHTML('afterend', `<p class="deliveryOnGoing" style="font-weight:bold;color: ${dateColor}">${absDateDiff} days of ${deliveryProtectionPeriod} to deadline</span>`);
+							orderDateElem.style.color = dateColor;
+							if (dateDiff > -5) {
+								el.style.backgroundColor = "DarkOrange";
+							}
+						} else {
+							orderDateElem.style.textDecoration = "line-through";
+							orderDateElem.style.fontStyle = "italic";
+							orderDateElem.style.color = "grey";
+							el.style.backgroundColor = "lightGreen";
+						}
+					}
+				}
+			})
+		}
+	}
+
+
 	if(styles){
 		document.querySelector('body').insertAdjacentHTML('afterend', '<style>'+styles+'</style>');
 	}

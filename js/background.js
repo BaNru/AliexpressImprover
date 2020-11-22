@@ -130,6 +130,7 @@ chrome.runtime.onInstalled.addListener(details=>{
 				hideTopBannerHome: true, // Скрываем верхний баннер
 				searchWithoutLogin: true, // Поиск без авторизации
 				copyLinkPage: true, // Копировать ссылку товара
+				ontime_delivery_protection: true, // Проверка времени заказа
 				orders: true // Слежние за заказами
 			};
 		}
@@ -164,6 +165,7 @@ chrome.runtime.onInstalled.addListener(details=>{
 			DATA.setting.orders = true;
 			DATA.orders = {}; // Заказы
 			DATA.extSetting.intl_locale = '';  // Переключение на другую локаль
+			DATA.setting.ontime_delivery_protection = true; // Проверка времени заказа
 			saveDATA();
 		}
 		saveDATA();
