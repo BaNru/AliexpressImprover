@@ -92,7 +92,7 @@ chrome.runtime.onMessage.addListener(
 				});
 			return true;
 		}
-		if (request.hasOwnProperty("changeLocale") && DATA.extSetting.intl_locale != false){
+		if (request.hasOwnProperty("changeLocale") && DATA.extSetting.intl_locale){
 			Promise.all([
 				changeCoockeLang('ru','ru'),
 				changeCoockeLang('ru','com'),
@@ -138,7 +138,7 @@ chrome.runtime.onInstalled.addListener(details=>{
 				timePrice: 500,
 				timeSlider: 500,
 				trackURL: 'https://gdeposylka.ru/*',
-				intl_locale: false // 2.1.0
+				intl_locale: '' // 2.1.0
 			};
 		}
 		if(!DATA.hasOwnProperty('tracks')){
@@ -163,7 +163,7 @@ chrome.runtime.onInstalled.addListener(details=>{
 		if(Number(details.previousVersion) <= 2.1){
 			DATA.setting.orders = true;
 			DATA.orders = {}; // Заказы
-			DATA.extSetting.intl_locale = false;  // Переключение на другую локаль
+			DATA.extSetting.intl_locale = '';  // Переключение на другую локаль
 			saveDATA();
 		}
 		saveDATA();
