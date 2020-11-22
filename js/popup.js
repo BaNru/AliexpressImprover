@@ -84,6 +84,9 @@ function load(){
 			orderhtml += '</li>'
 		}
 	}
+	if(!orderhtml){
+		orderhtml = 'Пока нет заказов в истории. Появятся, когда зайдёте на страницу заказов.'
+	}
 	document.querySelector('.ordersList').insertAdjacentHTML('afterbegin', orderhtml);
 	ToolTip();
 }
