@@ -238,6 +238,35 @@ function load(){
 			});
 		}
 	}
+	// Заказы
+	if(DATA.setting.orders){
+		if (~URL.indexOf('orderList.htm') || ~URL.indexOf('order_list.htm')) {
+			var orders = document.querySelectorAll('#buyer-ordertable tbody');
+			orders.forEach((element, i) => {
+				let id = element.querySelector('.first-row .info-body').textContent;
+				if(!DATA.orders.hasOwnProperty(id)){
+					DATA.orders[id] = {};
+				}
+				DATA.orders[id].status = element.querySelector('.order-status .f-left').textContent.trim();
+				DATA.orders[id].statusTime = element.querySelector('.order-status .left-sendgoods-day') && (Date.now() + Number(element.querySelector('.order-status .left-sendgoods-day').getAttribute('lefttime')));
+				DATA.orders[id].price = element.querySelector('.order-amount .amount-num').textContent.trim();
+				DATA.orders[id].storeName = element.querySelector('.store-info .info-body').textContent.trim();
+				DATA.orders[id].storeLink = element.querySelector('.store-info a').href;
+				if(!DATA.orders[id].hasOwnProperty('list')){
+					DATA.orders[id].list = [];
+				}
+				element.querySelectorAll('.order-body').forEach((item, a) => {
+					DATA.orders[id].list[a] = {
+						name:item.querySelector('.product-title a').title.trim(),
+						image:item.querySelector('img').src,
+						amount: item.querySelector('.product-amount').textContent.trim(),
+						property: item.querySelector('.product-property .val') && item.querySelector('.product-property .val').textContent.trim()
+					}
+				});
+			});
+			saveDATA();
+		}
+	}
 
 	if(styles){
 		document.querySelector('body').insertAdjacentHTML('afterend', '<style>'+styles+'</style>');

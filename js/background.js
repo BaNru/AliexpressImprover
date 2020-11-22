@@ -83,7 +83,8 @@ chrome.runtime.onInstalled.addListener(details=>{
 				evaHide: true, // Скрываем Еву
 				hideTopBannerHome: true, // Скрываем верхний баннер
 				searchWithoutLogin: true, // Поиск без авторизации
-				copyLinkPage: true // Копировать ссылку товара
+				copyLinkPage: true, // Копировать ссылку товара
+				orders: true // Слежние за заказами
 			};
 		}
 		if(!DATA.hasOwnProperty('extSetting')){
@@ -99,6 +100,10 @@ chrome.runtime.onInstalled.addListener(details=>{
 		// if(!DATA.hasOwnProperty('updateTimers')){
 		// 	DATA.updateTimers = {};
 		// }
+		// Заказы
+		if(!DATA.hasOwnProperty('orders')){
+			DATA.orders = {};
+		}
 		saveDATA();
 	}
 	if (details.reason == "update"){
@@ -107,6 +112,11 @@ chrome.runtime.onInstalled.addListener(details=>{
 			DATA.setting.hideTopBannerHome = true; // Скрываем верхний баннер
 			DATA.setting.searchWithoutLogin = true; // Поиск без авторизации
 			DATA.setting.copyLinkPage = true; // Копировать ссылку товара
+			saveDATA();
+		}
+		if(Number(details.previousVersion) <= 2.1){
+			DATA.setting.orders = true;
+			DATA.orders = {}; // Заказы
 			saveDATA();
 		}
 	}
