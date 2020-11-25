@@ -1,5 +1,6 @@
 // Вытаскиваем цены из строки и преобразуем в числа
 function normaliseInt(str){
+	str = str.replace(/\s|&nbsp;/, '');// Очищаем от мусора
 	return parseFloat(
 		( str.match(REGEXP) && str.match(REGEXP)[0] || str.match(REGEXP2) && str.match(REGEXP2)[0] || 0	).replace(/\s/,'').replace(',', '.')
 	);
