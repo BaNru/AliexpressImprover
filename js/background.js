@@ -169,8 +169,10 @@ chrome.runtime.onInstalled.addListener(details=>{
 			DATA.setting.ontime_delivery_protection = true; // Проверка времени заказа
 		}
 		if(Number(details.previousVersion) == 2.2){
-			console.log(1,details) // #gitignore
 			if(!DATA.orders)DATA.orders = {}; // Проверяем неудачное обновление заказов в предыдущей версии
+		}
+		if(Number(details.previousVersion) <= 2.2){
+			DATA.setting.openImage = true; // Открытие картинок в новой вкладке
 		}
 		saveDATA();
 	}
