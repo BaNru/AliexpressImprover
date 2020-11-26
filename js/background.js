@@ -131,7 +131,8 @@ chrome.runtime.onInstalled.addListener(details=>{
 				searchWithoutLogin: true, // Поиск без авторизации
 				copyLinkPage: true, // Копировать ссылку товара
 				ontime_delivery_protection: true, // Проверка времени заказа
-				orders: true // Слежние за заказами
+				orders: true, // Слежние за заказами
+				openImage: true // Открытие картинок в новой вкладке
 			};
 		}
 		if(!DATA.hasOwnProperty('extSetting')){

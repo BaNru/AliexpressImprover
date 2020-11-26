@@ -409,6 +409,17 @@ function load(){
 		}
 	}
 
+	// Кнопка открытия картинок в новом окне
+	if(DATA.setting.openImage){
+		document.querySelectorAll('.images-view-item img, .pic-view-item img, .product-sets img').forEach(el=>{
+			if(el.src){
+				let src = el.src;
+				src = src.replace(/_[0-9]+x[0-9]+\.(jpg|png)/, '').replace('_.webp', '');
+				el.insertAdjacentHTML('afterend', '<a href="'+src+'" class="AIopenlink" target="_blank"></a>');
+			}
+		});
+	}
+
 
 	if(styles){
 		document.querySelector('body').insertAdjacentHTML('afterend', '<style>'+styles+'</style>');

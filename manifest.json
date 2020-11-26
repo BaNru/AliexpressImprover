@@ -34,8 +34,8 @@
 		"matches"	: ["*://*.aliexpress.com/*","*://*.aliexpress.ru/*"],
 		"js"		: ["/js/content_functions.js", "/js/content.js", "/js/functions.js"],
 //		"run_at"	: "document_idle",
-		"run_at"	: "document_end"
-		//, "all_frames": true
+		"run_at"	: "document_end",
+		"all_frames": true
 	}],
 
 	"browser_action":
