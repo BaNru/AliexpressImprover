@@ -16,7 +16,7 @@ function RunTotalPrise() {
 	}
 
 	// Основная цена
-	var price = document.querySelector('.product-price-value[itemprop="price"]');
+	var price = document.querySelector('.product-price-current .product-price-value');
 
 	// Получение валюты
 	if (price){
@@ -28,7 +28,7 @@ function RunTotalPrise() {
 	}
 
 	// Доставка
-	var shippingPrice = document.querySelector('.product-shipping-price .bold');
+	var shippingPrice = document.querySelectorAll('.freight-extra-info .freight-extra-info-detail')[1];
 	if (shippingPrice && (shippingPrice.textContent.match(REGEXP) || shippingPrice.textContent.match(REGEXP2))) {
 		retObj.shipping = normaliseInt(shippingPrice.textContent);
 	}
