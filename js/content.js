@@ -27,7 +27,7 @@ function load(){
 
 	/* Скрываем верхний баннер */
 	if(DATA.setting.hideTopBannerHome){
-		styles += '.top-banner-container {display:none!important}';
+		styles += '.top-banner-container, [class*="styles_bannerLink"] {display:none!important}';
 	}
 
 	/* Поиск без авторизации */
