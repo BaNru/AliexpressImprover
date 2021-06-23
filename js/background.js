@@ -228,6 +228,7 @@ chrome.runtime.onInstalled.addListener(details=>{
 			if(!DATA.hasOwnProperty('exchange')){
 				DATA.setting.exchange = true;
 				DATA.exchange = {};
+				setTimeout(()=>{getExchange('USD')},3000);
 			}
 		}
 		saveDATA();
