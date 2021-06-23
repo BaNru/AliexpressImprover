@@ -10,6 +10,7 @@
 	"permissions": [
 		"*://*.aliexpress.com/*",
 		"*://*.aliexpress.ru/*",
+		"*://*.cbr.ru/*",
 		"cookies",
 		"storage"
 	],

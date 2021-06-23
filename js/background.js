@@ -80,6 +80,43 @@ function changeCoockeLang(domain1,domain2){
 }
 
 
+/**
+ * Получение курса валют
+ */
+function getExchange(cy){
+	return new Promise((resolve, reject)=>{
+		var d = Date.now();
+		if( DATA.exchange && DATA.exchange.USD && DATA.exchange.USD.date > (d-3*60*60*1000) ){
+			resolve(DATA.exchange.USD.Value);
+		}else{
+			fetch('https://www.cbr.ru/scripts/XML_daily.asp')
+				//.then(response => response.text())
+				.then(response => response.arrayBuffer())
+				.then(str => {
+					str = new TextDecoder("windows-1251").decode(str);
+					str = (new window.DOMParser()).parseFromString(str, "text/xml")
+					DATA.exchange = {};
+					str.querySelectorAll('Valute').forEach(el=>{
+						let id = el.getAttribute('ID');
+						let name = el.querySelector('CharCode').textContent;
+						DATA.exchange[name] = {
+							ID : id
+						};
+						DATA.exchange[name]['date'] = d;
+						el.querySelectorAll('*').forEach(item=>{
+							DATA.exchange[name][item.tagName] = item.textContent;
+						})
+					})
+					saveDATA();
+					resolve(DATA.exchange[cy].Value||0);
+				}
+			)
+		}
+		//reject();
+	});
+}
+
+
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		// console.log(request);
@@ -108,6 +145,13 @@ chrome.runtime.onMessage.addListener(
 			});
 			return true;
 		}
+		if (request.hasOwnProperty("getExchange")){
+			getExchange(request.getExchange)
+			.then(r=>{
+				sendResponse(r);
+			})
+			return true;
+		}
 		return false;
 	}
 )
@@ -132,7 +176,8 @@ chrome.runtime.onInstalled.addListener(details=>{
 				copyLinkPage: true, // Копировать ссылку товара
 				ontime_delivery_protection: true, // Проверка времени заказа
 				orders: true, // Слежние за заказами
-				openImage: true // Открытие картинок в новой вкладке
+				openImage: true, // Открытие картинок в новой вкладке
+				exchange: true // Курс валют
 			};
 		}
 		if(!DATA.hasOwnProperty('extSetting')){
@@ -152,6 +197,10 @@ chrome.runtime.onInstalled.addListener(details=>{
 		// Заказы
 		if(!DATA.hasOwnProperty('orders')){
 			DATA.orders = {};
+		}
+		// Хранение курса
+		if(!DATA.hasOwnProperty('exchange')){
+			DATA.exchange = {};
 		}
 		saveDATA();
 	}
@@ -173,6 +222,13 @@ chrome.runtime.onInstalled.addListener(details=>{
 		}
 		if(Number(details.previousVersion) <= 2.2){
 			DATA.setting.openImage = true; // Открытие картинок в новой вкладке
+		}
+		if(Number(details.previousVersion) <= 2.3){
+			// Хранение курса
+			if(!DATA.hasOwnProperty('exchange')){
+				DATA.setting.exchange = true;
+				DATA.exchange = {};
+			}
 		}
 		saveDATA();
 	}

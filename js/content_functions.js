@@ -8,39 +8,69 @@ function normaliseInt(str){
 
 // Основная функция подсчёта
 function RunTotalPrise() {
+	var retObj = {
+		price: 0,
+		shipping: 0,
+		full: 0,
+		cv: ''
+	}
 
 	// Основная цена
 	var price = document.querySelector('.product-price-value[itemprop="price"]');
+
+	// Получение валюты
+	if (price){
+		retObj.cv = price.textContent.match(/\$|руб/)[0];
+	}
+
 	if (price && (price.textContent.match(REGEXP) || price.textContent.match(REGEXP2))) {
-		price = normaliseInt(price.textContent);
-	} else {
-		price = 0;
+		retObj.price = normaliseInt(price.textContent);
 	}
 
 	// Доставка
 	var shippingPrice = document.querySelector('.product-shipping-price .bold');
 	if (shippingPrice && (shippingPrice.textContent.match(REGEXP) || shippingPrice.textContent.match(REGEXP2))) {
-		shippingPrice = normaliseInt(shippingPrice.textContent);
-	} else {
-		shippingPrice = 0;
+		retObj.shipping = normaliseInt(shippingPrice.textContent);
 	}
 
 	// Высчитываем
-	if (price) {
+	if (retObj.price > 0) {
 		var INPUT_ = (document.querySelector('.product-number-picker input') && document.querySelector('.product-number-picker input').value) || 1;
-		if (shippingPrice) {
-			return (price * INPUT_ + shippingPrice).toFixed(2);
+		if (retObj.shipping > 0) {
+			retObj.full = parseFloat((retObj.price * INPUT_ + retObj.shipping).toFixed(2));
 		} else {
-			return (price * INPUT_).toFixed(2);
+			retObj.full = parseFloat((retObj.price * INPUT_).toFixed(2));
 		}
 	}
-	return 0;
+
+	return retObj;
 }
 
 // Функция вывода цен на страницу
 function ReloadTotalPrise() {
 	TOTALPRICE = RunTotalPrise();
-	document.querySelector('.USER_totalPrice').textContent = 'Общая сумма: ' + TOTALPRICE;
+	console.log(TOTALPRICE)
+	// Курс
+	if(DATA.setting.exchange){
+		let cv = {
+			'руб' : 'RUB',
+			'$' : 'USD'
+		};
+		chrome.runtime.sendMessage({
+			getExchange : 'USD'
+		},(r)=>{
+			var ex = parseFloat(r.replace(',','.'));
+			if(TOTALPRICE.cv == '$'){
+				var p = (TOTALPRICE.full * ex).toFixed(2) + ' руб.';
+			}else{
+				var p = '$'+ (TOTALPRICE.full / ex).toFixed(2);
+			}
+			document.querySelector('.USER_totalPrice').innerHTML
+				= 'Общая сумма: ' + TOTALPRICE.full + ' (<i title="'+ex.toFixed(2)+'">'+p+'</i>)';
+		})
+	}else{
+		document.querySelector('.USER_totalPrice').textContent = 'Общая сумма: ' + TOTALPRICE.full;
+	}
 }
 
 // Получение трека (запрос через BG к https://track.aliexpress.com/)

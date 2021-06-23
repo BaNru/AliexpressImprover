@@ -50,7 +50,8 @@ function load(){
 			if(pricePar){
 				// Отрисовываем блок для вывода цены и кнопку "Пересчитать"
 				pricePar.insertAdjacentHTML('beforebegin',
-					'<span class="USER_totalPrice"">Общая сумма: ' + RunTotalPrise() + '</span><span class="USER_RunTotalPrice">Пересчитать</span>');
+					'<span class="USER_totalPrice""></span><span class="USER_RunTotalPrice">Пересчитать</span>');
+				ReloadTotalPrise();
 				// Создаём блок для подсчёта за единицу
 				document.querySelector('.product-sku').insertAdjacentHTML('afterend','<small class="USER_SiglePrice" style="top:-6px;position:relative;"></small>');
 
