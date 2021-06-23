@@ -1,4 +1,4 @@
-// Получение тректов
+// Получение треков
 function getTrackXHRBG(attr) {
 	return new Promise((resolve, reject) => {
 		var ordernumber = attr.ordernumber,
@@ -11,7 +11,7 @@ function getTrackXHRBG(attr) {
 			return resolve(inLS);
 		}
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'https://track.aliexpress.com/logisticsdetail.htm?tradeId=' + ordernumber);
+		xhr.open('GET', 'https://ilogisticsaddress.aliexpress.ru/ajax_logistics_track.htm?orderId=' + ordernumber);
 		xhr.onload = ()=>{
 			var tracknumber = [];
 			if (/"logisticsNo":"(.*?)"/.exec(xhr.responseText)) {
