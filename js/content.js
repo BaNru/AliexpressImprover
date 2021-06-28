@@ -95,7 +95,7 @@ function load(){
 			if(!document.querySelector('.product-title-switch')){
 				URLSP.set("isOrigTitle", "true");
 				// Отрисовываем ссылку переключения
-				document.querySelector('.product-title').insertAdjacentHTML('afterend','<div class="product-title-switch"><a href="'+ window.location.pathname + '?' + URLSP.toString() +'" class="product-title-link"><svg class="icon-svg product-title-icon" aria-hidden="true" style="font-size: 24px;"><use xlink:href="#icon-translate"></use></svg>Посмотреть оригинальное название</a></div>');
+				document.querySelector('.product-title,[class*="Name-module_container"]').insertAdjacentHTML('afterend','<div class="product-title-switch"><a href="'+ window.location.pathname + '?' + URLSP.toString() +'" class="product-title-link"><svg class="icon-svg product-title-icon" aria-hidden="true" style="font-size: 24px;"><use xlink:href="#icon-translate"></use></svg>Посмотреть оригинальное название</a></div>');
 			}
 		}
 
