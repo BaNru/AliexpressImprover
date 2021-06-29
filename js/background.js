@@ -206,35 +206,38 @@ chrome.runtime.onInstalled.addListener(details=>{
 		saveDATA();
 	}
 	if (details.reason == "update"){
-		// Обновление старой БД
-		if(Number(details.previousVersion) <= 2.0){
-			DATA.setting.hideTopBannerHome = true; // Скрываем верхний баннер
-			DATA.setting.searchWithoutLogin = true; // Поиск без авторизации
-			DATA.setting.copyLinkPage = true; // Копировать ссылку товара
-		}
-		if(Number(details.previousVersion) <= 2.1){
-			DATA.setting.orders = true;
-			DATA.orders = {}; // Заказы
-			DATA.extSetting.intl_locale = '';  // Переключение на другую локаль
-			DATA.setting.ontime_delivery_protection = true; // Проверка времени заказа
-		}
-		if(Number(details.previousVersion) == 2.2){
-			if(!DATA.orders)DATA.orders = {}; // Проверяем неудачное обновление заказов в предыдущей версии
-		}
-		if(Number(details.previousVersion) <= 2.2){
-			DATA.setting.openImage = true; // Открытие картинок в новой вкладке
-		}
-		if(Number(details.previousVersion) <= 2.3){
-			// Хранение курса
-			if(!DATA.hasOwnProperty('exchange')){
-				DATA.setting.exchange = true;
-				DATA.exchange = {};
-				setTimeout(()=>{getExchange('USD')},3000);
+		setTimeout(()=>{
+			// Обновление старой БД
+			if(Number(details.previousVersion) <= 2.0){
+				DATA.setting.hideTopBannerHome = true; // Скрываем верхний баннер
+				DATA.setting.searchWithoutLogin = true; // Поиск без авторизации
+				DATA.setting.copyLinkPage = true; // Копировать ссылку товара
 			}
-		}
-		if(Number(details.previousVersion) <= 2.4){
-			DATA.setting.searchShipping = true;
-		}
-		saveDATA();
+			if(Number(details.previousVersion) <= 2.1){
+				DATA.setting.orders = true;
+				DATA.orders = {}; // Заказы
+				DATA.extSetting.intl_locale = '';  // Переключение на другую локаль
+				DATA.setting.ontime_delivery_protection = true; // Проверка времени заказа
+			}
+			if(Number(details.previousVersion) == 2.2){
+				if(!DATA.orders)DATA.orders = {}; // Проверяем неудачное обновление заказов в предыдущей версии
+			}
+			if(Number(details.previousVersion) <= 2.2){
+				DATA.setting.openImage = true; // Открытие картинок в новой вкладке
+			}
+			if(Number(details.previousVersion) <= 2.3){
+				// Хранение курса
+				if(!DATA.hasOwnProperty('exchange')){
+					DATA.setting.exchange = true;
+					DATA.exchange = {};
+					setTimeout(()=>{getExchange('USD')},3000);
+				}
+			}
+			if(Number(details.previousVersion) <= 2.4){
+				console.log(DATA.setting)
+				DATA.setting.searchShipping = true;	
+			}
+			saveDATA();
+		},3000)
 	}
 });
