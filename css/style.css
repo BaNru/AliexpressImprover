@@ -166,3 +166,22 @@ a.AIopenlink {
 a.AIopenlink:hover {
 	background-color: #ff9a00;
 }
+
+/* Search Shipping */
+.getshipping {
+	cursor: pointer;
+	display: block;
+	padding: 0 4px;
+	border: 1px solid #666;
+	border-radius: 1px;
+	font-size: 12px;
+	line-height: 14px;
+	color: #666;
+	background: #e8e8e8;
+	text-align: center;
+}
+.getshipping:hover {
+	border: 1px solid #ff4747;
+	color: #ff4747;
+	background: #fff;
+}

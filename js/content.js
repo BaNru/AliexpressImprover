@@ -138,6 +138,29 @@ function load(){
 	}
 	/* / Страница товара */
 
+	/**
+	 * Расширяем результаты поиска
+	 */
+	if(~URL.indexOf('wholesale')){
+		// Узнать доставку
+		if(DATA.setting.searchShipping){
+			var OBSEel = document.querySelector('.list-items');
+			if(OBSEel){
+				searchShippingRender();
+				let observer = new MutationObserver((mutations)=>{
+					for(let mutation of mutations) {
+						for(let node of mutation.addedNodes) {
+							searchShippingRender();
+						}
+					}
+				});
+				observer.observe(OBSEel, {
+					childList: true,
+					subtree: true
+				});
+			}
+		}	
+	}
 
 	// Дополнительный поиск
 	if(DATA.setting.extSearch){

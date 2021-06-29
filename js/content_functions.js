@@ -144,3 +144,37 @@ function copyContect(text){
 	document.body.removeChild(input);
 	return result;
 }
+
+
+/* Функция получения и рендера цены доставки в поиске */
+function searchShippingRender(){
+	document.querySelectorAll('.list-item').forEach(el=>{
+		if(!el.querySelector('.item-shipping-wrap,.getshipping,.showshipping')){
+			let ss = document.createElement('span'),
+				p = el.querySelector('.item-price-wrap');
+			ss.className = 'getshipping';
+			ss.textContent = 'Узнать о доставке';
+			ss.addEventListener('click', () => {
+				let id = el.querySelector('[data-product-id]')?.dataset?.productId;
+				let price = normaliseInt(el.querySelector('.price-current').textContent);
+				if(id){
+					fetch('/aeglodetailweb/api/logistics/freight?productId='+id+'&count=1&userScene=PC_DETAIL_SHIPPING_PANEL&displayMultipleFreight=true&priceCurrency=RUB&minPrice='+price+'&maxPrice='+price+'&tradeCurrency=RUB')
+						.then(response => response.json())
+						.then(j => {
+							ss.remove();
+							let newss = [],
+								values = [];
+							j.body.freightResult.forEach(e => {
+								newss.push( e?.previewFreightAmount?.formatedAmount || e?.standardFreightAmount.formatedAmount || e?.freightAmount?.formatedAmount);
+								values.push( e?.previewFreightAmount?.value || e?.standardFreightAmount.value || e?.freightAmount?.value);
+							})
+							p.insertAdjacentHTML('afterend', '<span class="showshipping">'+ newss.join(', ') +'</span>' );
+							
+							el.querySelector('.price-current').textContent += ' (' + (price + Math.min( ...values )).toFixed(2) + ')';
+						})
+				}
+			});
+			p.parentNode.insertBefore(ss, p.nextSibling);
+		}
+	})
+}

@@ -177,7 +177,8 @@ chrome.runtime.onInstalled.addListener(details=>{
 				ontime_delivery_protection: true, // Проверка времени заказа
 				orders: true, // Слежние за заказами
 				openImage: true, // Открытие картинок в новой вкладке
-				exchange: true // Курс валют
+				exchange: true, // Курс валют
+				searchShipping: true // Узнать доставку
 			};
 		}
 		if(!DATA.hasOwnProperty('extSetting')){
@@ -230,6 +231,9 @@ chrome.runtime.onInstalled.addListener(details=>{
 				DATA.exchange = {};
 				setTimeout(()=>{getExchange('USD')},3000);
 			}
+		}
+		if(Number(details.previousVersion) <= 2.4){
+			DATA.setting.searchShipping = true;
 		}
 		saveDATA();
 	}
