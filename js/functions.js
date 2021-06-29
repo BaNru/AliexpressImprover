@@ -40,7 +40,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
 
 
 /*
- * Сохранение данныйх
+ * Сохранение данных
  */ 
 function saveDATA(fn) {
 //	console.log('сохраняем данные ', DATA);
