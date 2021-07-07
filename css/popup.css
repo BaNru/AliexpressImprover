@@ -107,6 +107,23 @@
 	transition: none;
 }
 
+.help {
+	color: #ff4747;
+	border: 1px solid #ff4747;
+	border-radius: 11px;
+	width: 16px;
+	height: 14px;
+	line-height: 12px;
+	font-size: 9px;
+	font-weight: bold;
+	text-align: center;
+	display: inline-block;
+}
+.help:hover {
+	background-color: #ff4747;
+	color: #fff;
+}
+
 .red {
 	color:red;
 }

@@ -109,11 +109,12 @@ function load(){
 
 		if(DATA.setting.origTitle){
 			// Показать оригинальное (на английском) название
-			// ?isOrigTitle=true
+			// ?isOrigTitle=true - больше не работает, теперь открываем оригинальную английскую страницу
 			if(!document.querySelector('.product-title-switch')){
-				URLSP.set("isOrigTitle", "true");
-				// Отрисовываем ссылку переключения
-				document.querySelector('.product-title,[class*="Name-module_container"]').insertAdjacentHTML('afterend','<div class="product-title-switch"><a href="'+ window.location.pathname + '?' + URLSP.toString() +'" class="product-title-link"><svg class="icon-svg product-title-icon" aria-hidden="true" style="font-size: 24px;"><use xlink:href="#icon-translate"></use></svg>Посмотреть оригинальное название</a></div>');
+				if(document.querySelector('[hreflang="id"]')){
+					// Отрисовываем ссылку переключения
+					document.querySelector('.product-title,[class*="Name-module_container"]').insertAdjacentHTML('afterend','<div class="product-title-switch" style="padding: 2px 0 7px;font-size: 13px;"><a href="'+ document.querySelector('[hreflang="id"]').href +'" class="product-title-link" target="_blank"><svg style="height:18px;padding: 0px 8px 0 0;vertical-align: sub;" viewBox="0 0 1024 1024"><path d="M264 640l-35.008-97.408H94.72L60.48 640H0l131.264-352.32h62.4L324.928 640h-60.928zM162.56 335.36L108.8 496h108.8l-55.04-160.64z m624.64 320V392.192h39.424v137.856c0 9.728-0.384 23.296-1.088 40.64-0.704 17.28-1.216 27.392-1.408 30.08h1.024l129.088-208.576h52.224v263.168h-39.04V518.528c0-18.432 0.768-38.848 2.496-61.184l0.896-11.712h-1.472l-129.408 209.728H787.2z m111.104-325.248l70.336-70.336a16.384 16.384 0 1 1 23.168 23.168l-81.92 81.92c-6.4 6.4-16.768 6.4-23.168 0l-81.92-81.92a16.384 16.384 0 1 1 23.168-23.168l70.336 70.336z m-551.232-77.44l32.32-16.128a16 16 0 0 1 14.336 28.672l-81.792 40.832a16 16 0 0 1-23.296-14.592V189.44a16 16 0 1 1 32 0v45.248C361.984 180.48 418.432 152.96 488.96 152.96c89.792 0 156.736 44.608 198.72 131.968a16 16 0 1 1-28.8 13.824C622.08 222.272 566.08 184.96 488.96 184.96c-59.648 0-106.624 22.272-141.888 67.776z m359.936 487.232l-32.32 16.192a16 16 0 0 1-14.336-28.672l81.792-40.832a16 16 0 0 1 23.296 14.592v102.016a16 16 0 1 1-32 0v-45.248c-41.344 54.208-97.792 81.728-168.32 81.728-89.792 0-156.736-44.608-198.72-131.968a16 16 0 1 1 28.8-13.824c36.864 76.48 92.8 113.792 169.92 113.792 59.648 0 106.624-22.272 141.888-67.776z"></path></svg>Посмотреть оригинальное название</a></div>');
+				}
 			}
 		}
 
