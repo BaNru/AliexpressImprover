@@ -56,7 +56,10 @@ function saveDATA(fn) {
 chrome.storage.local.get(result=>{
 	DATA = result;
 	if(typeof load == 'function'){
-		load();
+		// Дожидаемся загрузки страницы
+		window.addEventListener('load', ()=>{
+			load();
+		})
 	}
 });
 

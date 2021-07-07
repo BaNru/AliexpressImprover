@@ -34,8 +34,8 @@
 		"css"		: ["css/style.css"],
 		"matches"	: ["*://*.aliexpress.com/*","*://*.aliexpress.ru/*"],
 		"js"		: ["/js/content_functions.js", "/js/functions.js", "/js/content.js"],
-//		"run_at"	: "document_idle",
-		"run_at"	: "document_end",
+		"run_at"	: "document_idle",
+//		"run_at"	: "document_end",
 		"all_frames": true
 	}],
 
