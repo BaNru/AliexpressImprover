@@ -9,6 +9,9 @@ const
 var TOTALPRICE = 0;
 
 function load(){
+	// Дожидаемся загрузки страницы
+	window.addEventListener('load', ()=>{
+	
 	styles = "";
 
 	/* Проверка локали */
@@ -464,4 +467,5 @@ function load(){
 		document.querySelector('body').insertAdjacentHTML('afterend', '<style>'+styles+'</style>');
 	}
 
+})
 }
