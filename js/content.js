@@ -154,6 +154,38 @@ function load(){
 				})
 			}
 		}
+
+		// Отключение aotoplay у карусели при добавление в корзину
+		// Спасибо за помощь Джентльменам
+		if(DATA.setting.stopSlider){
+			var script = document.createElement('script')
+			script.textContent =  `
+			function stopSlider() {
+				var tI = 0;
+				var timerCard = setInterval(() => {
+					tI > 20 ? clearInterval(timerCard) : tI++; // Останавливаем таймер, если элемент не найден в течение 10 секунд
+					// console.log('Ищем слайдер');
+					if (document.querySelector('.next-slick')) {
+						setTimeout(()=>{
+							document.querySelector('.next-slick')[Object.keys(document.querySelector('.next-slick'))[0]].alternate.memoizedProps.children.props.autoplay = false;
+						}, ${DATA.setting['timeSlider']||500}); // Хак на дни распродаж
+						clearInterval(timerCard);
+					}
+				}, 500);
+			}
+			document.querySelector('[class*="Actions-module_wrapper"],.product-action').addEventListener('click', (e) => {
+				if (e.target.classList.contains('addcart')) {
+					if (document.querySelector('[class*="Actions-module_wrapper"],.product-action .addcart-wrap:not([aria-expanded]) button')) {
+						stopSlider();
+					}
+				}
+				if (e.target.closest('.add-wishlist-wrap')) {
+					stopSlider();
+				}
+			});
+			`
+			document.documentElement.appendChild(script)
+		}
 	}
 	/* / Страница товара */
 
@@ -232,38 +264,6 @@ function load(){
 		document.querySelector('body').classList.add('evaHideTrue');
 	}
 
-
-	// Отключение aotoplay у карусели при добавление в корзину
-	// Спасибо за помощь Джентльменам
-	if(DATA.setting.stopSlider){
-		var script = document.createElement('script')
-		script.textContent =  `
-		function stopSlider() {
-			var tI = 0;
-			var timerCard = setInterval(() => {
-				tI > 20 ? clearInterval(timerCard) : tI++; // Останавливаем таймер, если элемент не найден в течение 10 секунд
-				// console.log('Ищем слайдер');
-				if (document.querySelector('.next-slick')) {
-					setTimeout(()=>{
-						document.querySelector('.next-slick')[Object.keys(document.querySelector('.next-slick'))[0]].alternate.memoizedProps.children.props.autoplay = false;
-					}, ${DATA.setting['timeSlider']||500}); // Хак на дни распродаж
-					clearInterval(timerCard);
-				}
-			}, 500);
-		}
-		document.querySelector('[class*="Actions-module_wrapper"],.product-action').addEventListener('click', (e) => {
-			if (e.target.classList.contains('addcart')) {
-				if (document.querySelector('[class*="Actions-module_wrapper"],.product-action .addcart-wrap:not([aria-expanded]) button')) {
-					stopSlider();
-				}
-			}
-			if (e.target.closest('.add-wishlist-wrap')) {
-				stopSlider();
-			}
-		});
-		`
-		document.documentElement.appendChild(script)
-	}
 
 	// Номера треков на странице заказов
 	if(DATA.setting.tracks){
