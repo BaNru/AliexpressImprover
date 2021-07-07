@@ -32,10 +32,25 @@ function load(){
 
 	/* Поиск без авторизации */
 	if(DATA.setting.searchWithoutLogin){
-		var searchB = document.querySelector('.searchbar-operate-box,.header-search-btn');
+		var searchB = document.querySelector('[class*="Search-module_btnGroup"],[class*="SearchSection-module_searchButton"],.searchbar-operate-box,.header-search-btn');
 		if(searchB){
-			searchB.insertAdjacentHTML('beforeend','<span class="AI_SWL search-button"></span>');
-			styles += '.header .searchbar-form .search-button.AI_SWL{right:-45px;background-color: #4a47ff;cursor:pointer;z-index:9999;}.hm-right{margin-left:45px;}';
+			searchB.insertAdjacentHTML('afterend','<span class="AI_SWL"></span>');
+			styles += `
+.AI_SWL {
+	right: -45px;
+	background: #4a47ff url(//ae01.alicdn.com/kf/U076fc12af7c8408c9107c3e20c1fefd7G.png) 0 -1321px no-repeat;
+	height: 36px;
+	width: 40px;
+	cursor: pointer;
+	z-index: 9999;
+	border-radius: 0 4px 4px 0;
+}
+[class*="Search-module_container"] .AI_SWL {
+	border: 2px solid #4a47ff;
+}
+.hm-right {
+	margin-left:45px;
+}`;
 			document.querySelector('.AI_SWL').addEventListener('click', ()=>{
 				document.location.href="https://aliexpress.com/popular/"+document.querySelector('#search-key').value+'.html';
 			});
