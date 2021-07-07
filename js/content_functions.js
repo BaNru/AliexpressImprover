@@ -16,7 +16,7 @@ function RunTotalPrise() {
 	}
 
 	// Основная цена
-	var price = document.querySelector('.product-price-current .product-price-value');
+	var price = document.querySelector('.product-price-current');
 
 	// Получение валюты
 	if (price){
@@ -28,14 +28,14 @@ function RunTotalPrise() {
 	}
 
 	// Доставка
-	var shippingPrice = document.querySelectorAll('.delivery-info-wrapper + .freight-extra-info .freight-extra-info-detail')[1];
+	var shippingPrice = document.querySelector('[class*="NewFreight-module_deliveryInfoWrapper"] + span .freight-extra-info-detail');
 	if (shippingPrice && (shippingPrice.textContent.match(REGEXP) || shippingPrice.textContent.match(REGEXP2))) {
 		retObj.shipping = normaliseInt(shippingPrice.textContent);
 	}
 
 	// Высчитываем
 	if (retObj.price > 0) {
-		var INPUT_ = (document.querySelector('.product-number-picker input') && document.querySelector('.product-number-picker input').value) || 1;
+		var INPUT_ = ( document.querySelector('[class*="Quantity-module_counter"] span') &&  document.querySelector('[class*="Quantity-module_counter"] span').textContent ) || ( document.querySelector('.product-number-picker input') && document.querySelector('.product-number-picker input').value ) || 1;
 		if (retObj.shipping > 0) {
 			retObj.full = parseFloat((retObj.price * INPUT_ + retObj.shipping).toFixed(2));
 		} else {

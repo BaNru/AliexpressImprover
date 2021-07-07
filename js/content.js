@@ -46,21 +46,21 @@ function load(){
 	if(~URL.indexOf('/item/')){
 
 		if(DATA.setting.totalPrice){
-			var pricePar = document.querySelector('.product-action')
+			var pricePar = document.querySelector('[class*="Actions-module_wrapper"],.product-action');
 			if(pricePar){
 				// Отрисовываем блок для вывода цены и кнопку "Пересчитать"
 				pricePar.insertAdjacentHTML('beforebegin',
 					'<span class="USER_totalPrice""></span><span class="USER_RunTotalPrice">Пересчитать</span>');
 				ReloadTotalPrise();
 				// Создаём блок для подсчёта за единицу
-				document.querySelector('.product-sku').insertAdjacentHTML('afterend','<small class="USER_SiglePrice" style="top:-6px;position:relative;"></small>');
+				document.querySelector('[class*="Sku-module"],.product-sku').insertAdjacentHTML('afterend','<small class="USER_SiglePrice" style="top:-6px;position:relative;"></small>');
 
 				// Клик по кнопки "Пересчитать"
 				document.querySelector('.USER_RunTotalPrice').addEventListener('click', ReloadTotalPrise);
 
 				// Инициализация скрипта подсчёта при выборе характеристик товара и количества
 				// Отслеживание изменения доставки пользователем не предусмотрено
-				document.querySelectorAll('.product-quantity button,.sku-property-item').forEach(item => {
+				document.querySelectorAll('[class*="SkuValueBaseItem"],.product-quantity button,.sku-property-item').forEach(item => {
 					item.addEventListener('click', e=>{
 						setTimeout(()=>{
 							ReloadTotalPrise();
@@ -232,9 +232,9 @@ function load(){
 				}
 			}, 500);
 		}
-		document.querySelector('.product-action').addEventListener('click', (e) => {
+		document.querySelector('[class*="Actions-module_wrapper"],.product-action').addEventListener('click', (e) => {
 			if (e.target.classList.contains('addcart')) {
-				if (document.querySelector('.product-action .addcart-wrap:not([aria-expanded]) button')) {
+				if (document.querySelector('[class*="Actions-module_wrapper"],.product-action .addcart-wrap:not([aria-expanded]) button')) {
 					stopSlider();
 				}
 			}
