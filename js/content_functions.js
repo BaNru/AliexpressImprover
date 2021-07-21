@@ -28,7 +28,7 @@ function RunTotalPrise() {
 	}
 
 	// Доставка
-	var shippingPrice = document.querySelector('[class*="NewFreight-module_deliveryInfoWrapper"] + span .freight-extra-info-detail');
+	var shippingPrice = document.querySelector('[class*="NewFreight-module_deliveryInfoWrapper"] + span .freight-extra-info-detail, .product-shipping-price *');
 	if (shippingPrice && (shippingPrice.textContent.match(REGEXP) || shippingPrice.textContent.match(REGEXP2))) {
 		retObj.shipping = normaliseInt(shippingPrice.textContent);
 	}
