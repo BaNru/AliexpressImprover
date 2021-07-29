@@ -64,14 +64,14 @@ function load(){
 	if(~URL.indexOf('/item/')){
 
 		if(DATA.setting.totalPrice){
-			var pricePar = document.querySelector('[class*="Actions-module_wrapper"],.product-action');
+			var pricePar = document.querySelector('[class*="Product_Actions"],[class*="Actions-module_wrapper"],.product-action');
 			if(pricePar){
 				// Отрисовываем блок для вывода цены и кнопку "Пересчитать"
 				pricePar.insertAdjacentHTML('beforebegin',
 					'<span class="USER_totalPrice""></span><span class="USER_RunTotalPrice">Пересчитать</span>');
 				ReloadTotalPrise();
 				// Создаём блок для подсчёта за единицу
-				document.querySelector('[class*="Sku-module"],.product-sku').insertAdjacentHTML('afterend','<small class="USER_SiglePrice" style="top:-6px;position:relative;"></small>');
+//				document.querySelector('[class*="Sku-module"],.product-sku').insertAdjacentHTML('afterend','<small class="USER_SiglePrice" style="top:-6px;position:relative;"></small>');
 
 				// Клик по кнопки "Пересчитать"
 				document.querySelector('.USER_RunTotalPrice').addEventListener('click', ReloadTotalPrise);
