@@ -16,7 +16,7 @@ function RunTotalPrise() {
 	}
 
 	// Основная цена
-	var price = document.querySelector('.product-price-current');
+	var price = document.querySelector('.product-price-current,.uniform-banner-box-price');
 
 	// Получение валюты
 	if (price){
@@ -28,7 +28,7 @@ function RunTotalPrise() {
 	}
 
 	// Доставка
-	var shippingPrice = document.querySelector('[class*="Product_NewFreight__deliveryInfoWrapper"] + span .freight-extra-info-detail, [class*="NewFreight-module_deliveryInfoWrapper"] + span .freight-extra-info-detail, .product-shipping-price *');
+	var shippingPrice = document.querySelector('[class*="Product_NewFreight__deliveryInfoWrapper"] + span .freight-extra-info-detail, [class*="NewFreight-module_deliveryInfoWrapper"] + span .freight-extra-info-detail, .product-shipping-price *, .product-shipping .freight-extra-info-detail:nth-child(2)');
 	if (shippingPrice && (shippingPrice.textContent.match(REGEXP) || shippingPrice.textContent.match(REGEXP2))) {
 		retObj.shipping = normaliseInt(shippingPrice.textContent);
 	}
