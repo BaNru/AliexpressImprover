@@ -16,7 +16,7 @@ function RunTotalPrise() {
 	}
 
 	// Основная цена
-	var price = document.querySelector('.product-price-current,.uniform-banner-box-price');
+	var price = document.querySelector('.product-price-current,.uniform-banner-box-price, [class*="uniformBannerBoxPrice"]');
 
 	// Получение валюты
 	if (price){
