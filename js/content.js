@@ -83,9 +83,9 @@ function load(){
 						setTimeout(()=>{
 							ReloadTotalPrise();
 							// Подсчёт за единицу. Пока оставим тут.
-							if(e.target.textContent.match(REGEXP2)){
-								document.querySelector('.USER_SiglePrice').textContent = parseFloat( TOTALPRICE / e.target.textContent.match(REGEXP2)[0] ).toFixed(2);
-							}
+							// if(e.target.textContent.match(REGEXP2)){
+							// 	document.querySelector('.USER_SiglePrice').textContent = parseFloat( TOTALPRICE / e.target.textContent.match(REGEXP2)[0] ).toFixed(2);
+							// }
 						}, DATA.extSetting.timePrice||500); // Увеличить цифру 2+ раза, если не будет успевать считать
 					});
 				});
